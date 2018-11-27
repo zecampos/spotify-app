@@ -1,8 +1,7 @@
 <template>
 <v-app>
   <v-content>
-    <v-container fluid>
-      <Header></Header>
+    <v-container justify-center class="background" fluid>
       <nuxt/>
     </v-container>
   </v-content>
@@ -10,10 +9,16 @@
  
 </template>
 <script>
-import Header from '~/components/Header'
-export default {
-  components :{
-    Header
-  }
-}
+
 </script>
+<style>
+.background{
+  background-image: url('../assets/bg.jpg');
+  height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+</style>
