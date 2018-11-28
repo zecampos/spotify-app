@@ -2,7 +2,7 @@
   <v-layout fill-height justify-center align-center row wrap>
     <v-flex xs12 sm12 md12 lg12 xl12>
       <v-expansion-panel v-model="panel" expand>
-        <v-expansion-panel-content  v-for="(item, i) in 5" :key="i">
+        <v-expansion-panel-content v-for="(item, i) in 5" :key="i">
           <div slot="header">Item</div>
           <v-card>
             <v-card-text
@@ -15,39 +15,44 @@
   </v-layout>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   layout: "home",
-  async asyncData ({store}){
-    console.log(axios)
-    let token = await store.state.user.token
+  async asyncData({ store }) {
+    console.log(axios);
+    let token = await store.state.user.token;
     let config = {
-        headers: {'Authorization': "Bearer " + token }
-   };
+      headers: { Authorization: "Bearer " + token }
+    };
 
-    return await axios.get('https://api.spotify.com/v1/me', config)
-    .then((res) => {
-      const  {id, images}= res.data
-      store.commit('setUser', id)
-      store.commit('setImg', images[0].url)
-          
-      
+    return await axios
+      .get("https://api.spotify.com/v1/me/playlists", config)
+      .then(async res => {
+        let playlist =[]
+        const { items } = res.data;
+        await items.map(item =>{
+          let a ={
+            id: item.id,
+            name: item.name,
+            tracks: item.tracks.total
+          }
+          store.commit('setPlaylist',a)
+        })
+         
       })
-    .catch((e)=> console.log(e))
+      .catch(e => console.log(e));
   },
-  data () {
-      return {
-        panel: [false, false, false],
-        url : 'https://api.spotify.com'
-      }
-    },
-   
-    created(){
-    console.log(this.$store.state.user)
-    },
-    methods:{
-     
-    }
+  data() {
+    return {
+      panel: [false, false, false],
+      url: "https://api.spotify.com"
+    };
+  },
+
+  created() {
+    console.log(this.$store.state.user);
+  },
+  methods: {}
   // page component definitions
 };
 </script>

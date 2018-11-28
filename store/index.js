@@ -8,7 +8,8 @@ const createStore = () => {
             token: '',
             id: '',
             img: null
-        }
+        },
+        playlist:[]
      
 
     }),
@@ -21,6 +22,9 @@ const createStore = () => {
       },
       setUser(state, id){
         state.user.id = id
+      },
+      setPlaylist(state, play){
+        state.playlist.push(play)
       }
     }
   })
