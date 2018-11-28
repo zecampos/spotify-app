@@ -15,28 +15,38 @@
   </v-layout>
 </template>
 <script>
+import axios from 'axios'
 export default {
   layout: "home",
-  asyncData (){
-  /*
-     let config = {
-        headers: {'Authorization': "bearer " + token}
+  async asyncData ({store}){
+    console.log(axios)
+    let token = await store.state.user.token
+    let config = {
+        headers: {'Authorization': "Bearer " + token }
    };
 
-    return this.$axios.get('https://api.spotify.com/v1/me', config)
-    .then((res) => console.log(res))
-    .catch((e)=> console.log(e))*/
+    return await axios.get('https://api.spotify.com/v1/me', config)
+    .then((res) => {
+      const  {id, images}= res.data
+      store.commit('setUser', id)
+      store.commit('setImg', images[0].url)
+          
+      
+      })
+    .catch((e)=> console.log(e))
   },
   data () {
       return {
-        panel: [false, false, false]
+        panel: [false, false, false],
+        url : 'https://api.spotify.com'
       }
     },
+   
     created(){
     console.log(this.$store.state.user)
     },
     methods:{
-      
+     
     }
   // page component definitions
 };
