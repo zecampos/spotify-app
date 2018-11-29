@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-
+import VuexPersistence from 'vuex-persist'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -13,6 +13,7 @@ const createStore = () => {
      
 
     }),
+    plugins: [new VuexPersistence().plugin],
     mutations: {
       setToken(state, token){
         state.user.token = token

@@ -3,7 +3,6 @@
    <v-avatar size="36" >
           <img src="~/assets/icon.png" alt="avatar">
         </v-avatar>
-    </v-btn>
  <v-spacer></v-spacer>
     <v-toolbar-title class="white--text">My Playlist</v-toolbar-title>
 

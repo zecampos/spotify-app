@@ -2,8 +2,8 @@
   <v-layout fill-height justify-center align-center row wrap>
     <v-flex xs12 sm12 md12 lg12 xl12>
       <v-expansion-panel v-model="panel" expand>
-        <v-expansion-panel-content v-for="(item, i) in 5" :key="i">
-          <div slot="header">Item</div>
+        <v-expansion-panel-content v-for="(item, index) of playlist" :key="index">
+          <div slot="header">{{item.name}}</div>
           <v-card>
             <v-card-text
               class="#303030"
@@ -47,6 +47,11 @@ export default {
       panel: [false, false, false],
       url: "https://api.spotify.com"
     };
+  },
+  computed:{
+    playlist(){
+      return this.$store.state.playlist
+    }
   },
 
   created() {
