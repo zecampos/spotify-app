@@ -8,11 +8,16 @@ const createStore = () => {
             token: '',
             id: '',
             img: null
-        },
-        playlist:[]
-     
-
+        }
     }),
+    getters:{
+      token: state =>{
+        return state.token
+      },
+      id: state =>{
+        return state.id
+      }
+    },
     plugins: [new VuexPersistence().plugin],
     mutations: {
       setToken(state, token){
