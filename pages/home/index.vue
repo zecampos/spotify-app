@@ -18,42 +18,7 @@
 import axios from "axios";
 export default {
   layout: "home",
-  async asyncData({ store }) {
-    let token = await store.state.user.token;
-    let config = {
-      headers: { Authorization: "Bearer " + token }
-    };
-   
-    return await axios
-      .get("https://api.spotify.com/v1/me/playlists", config)
-      .then(async res => {
-        let playlist =[]
-        let tracks =[]
-        const { items } = res.data;
-        await items.map(item =>{
-          let musicas =[]
-           axios.get(`https://api.spotify.com/v1/playlists/${item.id}/tracks?fields=items(track(name,href,album(name,href)))`, config)
-          .then(async res => {
-            const {items} = res.data
-          
-            await items.map(track => musicas.push(track))
-          })
-          .catch((e) => console.log(e))
-           let a ={
-            id: item.id,
-            name: item.name,
-            totalTracks: item.tracks.total,
-            faixas: musicas
-
-          }
-         store.commit('setPlaylist', a)
-        
-        
-        })
-         
-      })
-      .catch(e => console.log(e));
-  },
+  
   data() {
     return {
       panel: [false, false, false],
@@ -67,16 +32,55 @@ export default {
   },
 
   created() {
-    console.log(this.$store.state.user);
+    this.getPlaylist()
   },
   methods: {
+    getPlaylist (){
+      let that = this;
+      let config = {
+      headers: { Authorization: "Bearer " + this.$store.state.token }
+    };
+   
+      axios
+      .get("https://api.spotify.com/v1/me/playlists", config)
+      .then(async res => {
+        let playlist =[]
+        let tracks =[]
+        const { items } = res.data;
+        await items.map((item) =>{
+          let musicas =[]
+           /*axios.get(`https://api.spotify.com/v1/playlists/${item.id}/tracks?fields=items(track(name,href,album(name,href)))`, config)
+          .then(async res => {
+            const {items} = res.data
+          
+            await items.map(track => musicas.push(track))
+          })
+          .catch((e) => console.log(e))
+          */
+         //let res = getTracksPlaylists(item.id)
+           /* let a ={
+            id: item.id,
+            name: item.name,
+            totalTracks: item.tracks.total,
+            faixas: musicas
+
+          } */
+          console.log(item)
+        // store.commit('setPlaylist', a)
+        
+        
+        })
+         
+      })
+      .catch(e => console.log(e));
+    },
   getTracksPlaylists(id){
     let config = {
       headers: { Authorization: "Bearer " + this.$store.state.user.token }
     };
-    axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks?fields=items(track(name,href,album(name,href)))`)
-    .then()
-    .catch()
+    axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks?fields=items(track(name,href,album(name,href)))`, config)
+    .then(res => console.log(res.data))
+    .catch(e => console.log(e))
   }
   }
 };
