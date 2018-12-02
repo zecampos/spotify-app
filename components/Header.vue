@@ -4,7 +4,7 @@
           <img src="~/assets/icon.png" alt="avatar">
         </v-avatar>
  <v-spacer></v-spacer>
-    <v-toolbar-title class="white--text">My Playlist</v-toolbar-title>
+    <v-toolbar-title class="white--text">Spotify Playlist</v-toolbar-title>
 
     <v-spacer></v-spacer>
     <p>{{id}}</p>
