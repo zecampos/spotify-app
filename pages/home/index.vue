@@ -93,7 +93,7 @@ export default {
         name: "",
         collaborative: false,
         description: "",
-        public: false
+        public: true
       },
       snackbar:{
         snackbar: false,
