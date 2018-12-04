@@ -34,8 +34,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~plugins/vuetify.js',
-    { src: '~/plugins/localStorage.js', ssr: false }
+    '~plugins/vuetify.js'
   ],
 
   /*
