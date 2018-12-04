@@ -26,7 +26,7 @@ export default {
   methods:{
     logar (){
      //this.$router.push('http://localhost:8888/login')
-     window.open('http://localhost:8888/login','_self');
+     window.open('https://api-spotify-auth.herokuapp.com/login','_self');
     }
   }
 };
