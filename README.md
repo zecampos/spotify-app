@@ -1,8 +1,5 @@
 # spotify-app
-Vue with Nuxt
-
-https://github.com/zecampos/auth-spotify
-
+Application developed with Vue and Nuxt, integrated with the Spotify API.
 
 ## Project setup
 
