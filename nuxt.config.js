@@ -35,8 +35,7 @@ module.exports = {
   */
   plugins: [
     '~plugins/vuetify.js',
-    { src: '~/plugins/localStorage.js', ssr: false },
-    {src: '~/plugins/notification', ssr: false}
+    { src: '~/plugins/localStorage.js', ssr: false }
   ],
 
   /*
