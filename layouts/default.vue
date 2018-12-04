@@ -11,14 +11,16 @@
 <script>
 
 </script>
-<style>
-.background{
-  background-image: url('../assets/bg.jpg');
-  height: 100%; 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-}
+<style lang="stylus" scoped>
+.background 
+	background-image url('../assets/bg.jpg')
+	height 100%
+	background-position center
+	background-repeat no-repeat
+	background-size cover
 
 </style>
+
+
+
+

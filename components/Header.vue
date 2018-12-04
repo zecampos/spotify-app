@@ -15,8 +15,9 @@
         </v-avatar>
     </v-btn>
 
-    <v-btn icon>
-      <v-icon>more_vert</v-icon>
+    <v-btn @click="logOut" icon>
+      
+      <v-icon>exit_to_app</v-icon>
     </v-btn>
   </v-toolbar>
 </template>
@@ -30,5 +31,13 @@
         return this.$store.state.user.id
       }
     },
+    methods:{
+      async logOut(){
+        await this.$store.commit("setToken", '')
+        await this.$store.commit("setUser", '');
+        await this.$store.commit("setImg", '');
+        await this.$router.push("/");
+      }
+    }
   }
 </script>

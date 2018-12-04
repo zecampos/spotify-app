@@ -1,10 +1,12 @@
 <template>
 <div>
   <v-layout fill-height justify-center align-center row wrap>
+    
     <v-flex xs12 sm12 md12 lg6 xl6>
+      <!--<pulse-loader style="text-align:center" :loading="loading" color="#4caf50" size="30px"></pulse-loader>-->
       <v-expansion-panel v-model="panel" expand>
         <v-expansion-panel-content v-for="(item, index) of playlist" :key="index">
-          <div slot="header">{{item.name}}</div>
+          <div slot="header">{{item.name}} </div>            
           <v-card v-for="(track, index) of item.tracks" :key="index" >
             <Card :name="track.track.name" :image="track.track.album.images['0'].url" :dataL="track.track.album.release_date.substring(0,4)"></Card>
             <v-card-text
@@ -76,10 +78,14 @@
 <script>
 import axios from "axios";
 import Card from "~/components/Card";
+//import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 export default {
   components: {
-    Card
+    Card,
+   // PulseLoader
   },
+
   layout: "home",
 
   data() {
@@ -96,34 +102,30 @@ export default {
         public: true
       },
       snackbar:{
-        snackbar: false,
+        snackbar: true,
         y: 'top',
         x: null,
         mode: '',
         timeout: 6000,
         text: ''
-      }
+      },
+      loading: false
       
     };
   },
-
-  computed:{
-    nameIsValid: function(){
-      console.log('oha po')
-      if (this.newPlaylist.name.length > 2)
-       return this.formNew = true
-    }
-    
-  },
-
   created() {
-    console.log();
+     if (this.$store.state.user.token === '' || null){
+        this.$router.push('/')
+    }else{
     this.getPlaylist(this.$store.state.user.token);
+    
+    }
    
 
   },
   methods: {
     getPlaylist(token) {
+      this.loading = true
       let config = { headers: { Authorization: "Bearer " + token } };
       axios
         .get("https://api.spotify.com/v1/me/playlists", config)
@@ -139,11 +141,15 @@ export default {
               name: item.name,
               tracks: await this.getTracksPlaylists(item.id, token)
             };
-            console.log(a);
             this.playlist.push(a);
           });
+           this.loading = false
+           this.showPlaylist()
         })
-        .catch(e => console.log(e));
+        .catch(e => {
+           this.loading = false
+          
+          });
     },
     async getTracksPlaylists(id, token) {
       let ms = [];
@@ -178,8 +184,10 @@ this.newPlaylist ={
           Authorization: "Bearer " + this.$store.state.user.token } };
       if (this.newPlaylist.name.length >2){
        await axios.post(`https://api.spotify.com/v1/users/${this.$store.state.user.id}/playlists`,this.newPlaylist, config).then(async res =>{
-         console.log(res.data)
          await this.resetForm()
+         this.playlist =[]
+         await this.getPlaylist(this.$store.state.user.token);
+         this.modalNew = false
        }).catch(error => console.log(error))
       
       }else{
